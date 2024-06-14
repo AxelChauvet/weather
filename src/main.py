@@ -24,6 +24,3 @@ for item in call_api("/stations?limit=5"):
         else:
             print(f"Wind: {station_wind} km/h")
         print("##########################")
-
-
-
