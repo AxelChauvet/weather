@@ -14,21 +14,35 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.9'  # Specify the Python version you want to use
 
     - name: Install Poetry
       run: |
         curl -sSL https://install.python-poetry.org | python3 -
+      env:
+        POETRY_HOME: ${{ runner.temp }}/.poetry
+
+    - name: Add Poetry to PATH
+      run: echo "${{ runner.temp }}/.poetry/bin" >> $GITHUB_PATH
 
     - name: Install dependencies
       run: |
         poetry install
+      env:
+        POETRY_VIRTUALENVS_CREATE: false
+
+    - name: Show Python version and packages
+      run: |
+        python --version
+        poetry --version
+        poetry show
 
     - name: Build project
       run: |
+        ls -lah
         poetry build
