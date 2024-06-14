@@ -42,6 +42,10 @@ jobs:
         poetry --version
         poetry show
 
+    - name: Run black to check it the project is formatted
+      run: |
+        poetry run black --check
+
     - name: Build project
       run: |
         ls -lah
